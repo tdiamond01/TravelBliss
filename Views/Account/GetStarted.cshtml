@@ -4,50 +4,139 @@
 
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-lg-10">
             <div class="text-center mb-5">
-                <h1 class="display-4 fw-bold mb-3">Get started for free</h1>
-                <p class="lead text-muted">Start your 7-day free trial. No credit card required.</p>
+                <h1 class="display-4 fw-bold mb-3">Join thousands already using TravelBliss</h1>
+                <p class="lead text-muted">Win clients, look professional, and work smarter. It's that simple.</p>
             </div>
 
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-body p-5">
-                    <form>
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control form-control-lg" id="firstName" placeholder="Enter your first name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control form-control-lg" id="lastName" placeholder="Enter your last name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control form-control-lg" id="email" placeholder="Enter your email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control form-control-lg" id="password" placeholder="Create a password" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="companyName" class="form-label">Company Name</label>
-                            <input type="text" class="form-control form-control-lg" id="companyName" placeholder="Enter your company name" required>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-pink btn-lg py-3">Start your free trial</button>
-                        </div>
-                        <p class="text-center text-muted mt-3 small">
-                            7-day free trial • No credit card required • Cancel any time
+            <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="bg-light p-4 rounded-3 h-100">
+                        <form id="signupForm" onsubmit="handleSignup(event)">
+                            <div class="mb-3">
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="firstName"
+                                       name="firstName"
+                                       placeholder="First Name"
+                                       minlength="2"
+                                       maxlength="50"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="lastName"
+                                       name="lastName"
+                                       placeholder="Last Name"
+                                       minlength="2"
+                                       maxlength="50"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email"
+                                       class="form-control form-control-lg"
+                                       id="email"
+                                       name="email"
+                                       placeholder="Email"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       id="password"
+                                       name="password"
+                                       placeholder="Password"
+                                       minlength="8"
+                                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                                       title="Password must be at least 8 characters and have at least one uppercase letter, lowercase letter, number, and symbol"
+                                       required>
+                                <small class="text-muted d-block mt-2">
+                                    Your password must be at least 8 characters and have at least one uppercase letter, lowercase letter, number, and symbol
+                                </small>
+                            </div>
+                            <div class="mb-4">
+                                <button type="button" class="btn btn-link text-decoration-none p-0" onclick="togglePromoCode()">
+                                    <i class="bi bi-gift"></i> Have a promo code?
+                                </button>
+                                <div id="promoCodeSection" class="mt-2" style="display: none;">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="promoCode"
+                                           name="promoCode"
+                                           placeholder="Enter promo code">
+                                </div>
+                            </div>
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-pink btn-lg py-3 rounded-pill">Get started with my free trial</button>
+                            </div>
+                            <p class="text-center text-muted small mb-3">
+                                By signing up, you agree to TravelBliss's <a href="#" class="text-decoration-none">terms of use</a> and <a href="#" class="text-decoration-none">privacy policy</a>.
+                            </p>
+                        </form>
+                        <p class="text-center text-muted fw-bold">
+                            Already a member? <a href="@Url.Action("SignIn", "Account")" class="text-decoration-none" style="color: var(--pink-primary);">Sign in</a>
                         </p>
-                    </form>
+                    </div>
                 </div>
-            </div>
-
-            <div class="text-center mt-4">
-                <p class="text-muted">
-                    Already have an account? <a href="@Url.Action("SignIn", "Account")" class="text-decoration-none fw-bold" style="color: var(--pink-primary);">Sign in</a>
-                </p>
+                <div class="col-md-6">
+                    <div class="ps-md-4">
+                        <h4 class="mb-4">Make sure TravelBliss is the right fit by starting with a free trial:</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-info fs-5 me-2"></i>
+                                <span class="fs-5">Start sending invoices right away</span>
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-info fs-5 me-2"></i>
+                                <span class="fs-5">Try TravelBliss for free</span>
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-check-circle-fill text-info fs-5 me-2"></i>
+                                <span class="fs-5">No credit card required</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function togglePromoCode() {
+        const promoSection = document.getElementById('promoCodeSection');
+        promoSection.style.display = promoSection.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function handleSignup(event) {
+        event.preventDefault();
+
+        const form = event.target;
+
+        // Check if form is valid using HTML5 validation
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return false;
+        }
+
+        // Get form values
+        const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            promoCode: document.getElementById('promoCode').value
+        };
+
+        // Since we're not saving to backend, just show success message and redirect
+        alert(`Welcome to TravelBliss, ${formData.firstName}! Your account has been created successfully.`);
+
+        // In a real app, you would redirect to a dashboard or next step
+        // For now, redirect to home page
+        window.location.href = '@Url.Action("Index", "Home")';
+
+        return false;
+    }
+</script>
