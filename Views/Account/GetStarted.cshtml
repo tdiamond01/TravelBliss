@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Get Started for Free";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold mb-3">Get started for free</h1>
+                <p class="lead text-muted">Start your 7-day free trial. No credit card required.</p>
+            </div>
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <form>
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control form-control-lg" id="firstName" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control form-control-lg" id="lastName" placeholder="Enter your last name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control form-control-lg" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control form-control-lg" id="password" placeholder="Create a password" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="companyName" class="form-label">Company Name</label>
+                            <input type="text" class="form-control form-control-lg" id="companyName" placeholder="Enter your company name" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-pink btn-lg py-3">Start your free trial</button>
+                        </div>
+                        <p class="text-center text-muted mt-3 small">
+                            7-day free trial • No credit card required • Cancel any time
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted">
+                    Already have an account? <a href="@Url.Action("SignIn", "Account")" class="text-decoration-none fw-bold" style="color: var(--pink-primary);">Sign in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

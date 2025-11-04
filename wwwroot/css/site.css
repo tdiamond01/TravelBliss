@@ -1,3 +1,5 @@
+/* TravelBliss Custom Styles */
+
 html {
   font-size: 14px;
 }
@@ -8,19 +10,188 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+  margin: 0;
+  padding: 0;
 }
 
+/* Color Palette */
+:root {
+  --teal-primary: #17a2b8;
+  --teal-dark: #138496;
+  --teal-darker: #0e6674;
+  --purple-primary: #6c5ce7;
+  --cyan-bright: #00d4ff;
+  --cyan-light: #4dd0e1;
+  --pink-primary: #e91e63;
+  --pink-hover: #c2185b;
+  --green-primary: #26a69a;
+}
+
+/* Custom Buttons */
+.btn-pink {
+  background-color: var(--pink-primary);
+  border-color: var(--pink-primary);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.btn-pink:hover {
+  background-color: var(--pink-hover);
+  border-color: var(--pink-hover);
+  color: white;
+}
+
+.btn-outline-danger {
+  border-width: 2px;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.btn-danger {
+  background-color: var(--pink-primary);
+  border-color: var(--pink-primary);
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.btn-danger:hover {
+  background-color: var(--pink-hover);
+  border-color: var(--pink-hover);
+}
+
+.btn-white {
+  background-color: white;
+  color: var(--teal-dark);
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.btn-white:hover {
+  background-color: #f8f9fa;
+  color: var(--teal-darker);
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 4rem 0;
+}
+
+.icon-badges {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.icon-badge {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-badge i {
+  filter: brightness(0) invert(1);
+}
+
+/* Background Colors */
+.bg-teal {
+  background-color: var(--teal-primary);
+}
+
+.bg-purple {
+  background-color: var(--purple-primary);
+}
+
+.bg-cyan {
+  background-color: var(--cyan-light);
+}
+
+.bg-green {
+  background-color: var(--green-primary);
+}
+
+.bg-gradient-cyan {
+  background: linear-gradient(135deg, var(--cyan-light) 0%, var(--cyan-bright) 100%);
+}
+
+/* Text Colors */
+.text-teal {
+  color: var(--teal-primary);
+}
+
+.text-purple {
+  color: var(--purple-primary);
+}
+
+.text-primary {
+  color: var(--cyan-light) !important;
+}
+
+/* Feature Cards */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.border-purple {
+  border: 2px solid var(--purple-primary) !important;
+  border-left: 5px solid var(--purple-primary) !important;
+}
+
+.border-teal {
+  border: 2px solid var(--teal-primary) !important;
+  border-left: 5px solid var(--teal-primary) !important;
+}
+
+.rounded-4 {
+  border-radius: 1rem !important;
+}
+
+/* Sections */
+.ai-section, .testimonial-section, .cta-section {
+  position: relative;
+}
+
+.footer-teal {
+  background-color: var(--teal-darker);
+}
+
+/* Navigation */
+.navbar {
+  padding: 1rem 0;
+}
+
+.navbar-brand {
+  font-family: 'Georgia', serif;
+}
+
+.nav-link {
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Bootstrap Icons */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css");
+
+/* Form Styles */
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -28,4 +199,8 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem var(--cyan-light);
 }
