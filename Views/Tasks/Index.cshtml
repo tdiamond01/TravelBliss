@@ -1,0 +1,428 @@
+@{
+    ViewData["Title"] = "Tasks";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dashboard-content">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">Tasks</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTaskModal">
+            <i class="bi bi-plus-lg"></i> Add task
+        </button>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="mb-4">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-sm btn-primary" id="filterAll" onclick="filterTasks('all')">
+                All <span class="badge bg-white text-primary ms-1" id="countAll">0</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="filterOverdue" onclick="filterTasks('overdue')">
+                Overdue <span class="badge bg-danger ms-1" id="countOverdue">0</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="filterToday" onclick="filterTasks('today')">
+                Today <span class="badge bg-secondary ms-1" id="countToday">0</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="filterThisWeek" onclick="filterTasks('thisweek')">
+                This week <span class="badge bg-secondary ms-1" id="countThisWeek">0</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="filterCompleted" onclick="filterTasks('completed')">
+                Completed <span class="badge bg-secondary ms-1" id="countCompleted">0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Search:" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Table -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                NAME
+                                <i class="bi bi-arrow-down-up text-muted small"></i>
+                            </th>
+                            <th>
+                                DUE DATE
+                                <i class="bi bi-arrow-down-up text-muted small"></i>
+                            </th>
+                            <th>
+                                AUTOMATION
+                                <i class="bi bi-lightning-fill text-warning"></i>
+                                <i class="bi bi-arrow-down-up text-muted small"></i>
+                            </th>
+                            <th>
+                                WHEN
+                                <i class="bi bi-calendar-event text-muted"></i>
+                                <i class="bi bi-arrow-down-up text-muted small"></i>
+                            </th>
+                            <th>
+                                CLIENT
+                                <i class="bi bi-arrow-down-up text-muted small"></i>
+                            </th>
+                            <th>
+                                GROUP/TRIP
+                                <i class="bi bi-arrow-down-up text-muted small"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasksTableBody">
+                        <tr id="emptyState">
+                            <td colspan="6" class="text-center py-5">
+                                <div class="text-muted">
+                                    <p class="mb-0">You don't have any tasks</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-3 text-muted small" id="tasksFooter">
+        Showing 0 to 0 of 0 entries
+    </div>
+</div>
+
+<!-- Create Task Modal -->
+<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-bottom">
+                <h3 class="modal-title fw-bold" id="createTaskModalLabel">Create Task</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="createTaskForm">
+                    <!-- Group/Trip -->
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label fw-bold text-end">Group/Trip</label>
+                        <div class="col-sm-9">
+                            <select class="form-select form-select-lg" id="groupTripSelect" onchange="handleSelectChange(this)">
+                                <option value="">Select a group or trip...</option>
+                                <option value="1">Johnson Family Vacation (Sarah Johnson)</option>
+                                <option value="2">Corporate Retreat 2025 (Group)</option>
+                                <option value="3">Smith Wedding Destination (Emily Smith)</option>
+                                <option value="4">Summer Europe Tour (Michael Chen)</option>
+                                <option value="5">Anderson Anniversary Trip (Robert Anderson)</option>
+                                <option value="6">Beach Resort Getaway (Lisa Martinez)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label fw-bold text-end">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control form-control-lg" id="taskName" placeholder="Enter task name">
+                        </div>
+                    </div>
+
+                    <!-- Due Date -->
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label fw-bold text-end">Due</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-calendar3"></i>
+                                </span>
+                                <input type="date" class="form-control form-control-lg" id="taskDueDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="row mb-3 align-items-start">
+                        <label class="col-sm-3 col-form-label fw-bold text-end">Notes</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="6" id="taskNotes" placeholder="Add notes..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Completed Checkbox -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-sm-9 offset-sm-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="completedCheck">
+                                <label class="form-check-label" for="completedCheck">
+                                    Completed
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Send Reminder Checkbox -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-sm-9 offset-sm-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="reminderCheck" checked>
+                                <label class="form-check-label text-primary" for="reminderCheck">
+                                    Send reminder
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-top">
+                <button type="button" class="btn btn-lg btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-lg btn-primary px-5" onclick="saveTask()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Store tasks in memory (will be lost on page refresh)
+    let tasks = [];
+
+    let currentFilter = 'all';
+
+    function filterTasks(filter) {
+        currentFilter = filter;
+
+        // Remove active class from all buttons
+        document.querySelectorAll('.btn-group .btn').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-secondary');
+        });
+
+        // Add active class to clicked button
+        const activeButton = document.getElementById('filter' + filter.charAt(0).toUpperCase() + filter.slice(1));
+        if (activeButton) {
+            activeButton.classList.remove('btn-outline-secondary');
+            activeButton.classList.add('btn-primary');
+        }
+
+        // Filter and render tasks
+        renderTasks();
+    }
+
+    function getFilteredTasks() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const nextWeek = new Date(today);
+        nextWeek.setDate(nextWeek.getDate() + 7);
+
+        switch(currentFilter) {
+            case 'all':
+                return tasks.filter(t => !t.completed);
+
+            case 'overdue':
+                return tasks.filter(t => {
+                    if (!t.dueDate || t.completed) return false;
+                    const dueDate = new Date(t.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    return dueDate < today;
+                });
+
+            case 'today':
+                return tasks.filter(t => {
+                    if (!t.dueDate || t.completed) return false;
+                    const dueDate = new Date(t.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    return dueDate.getTime() === today.getTime();
+                });
+
+            case 'thisweek':
+                return tasks.filter(t => {
+                    if (!t.dueDate || t.completed) return false;
+                    const dueDate = new Date(t.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    return dueDate >= today && dueDate < nextWeek;
+                });
+
+            case 'completed':
+                return tasks.filter(t => t.completed);
+
+            default:
+                return tasks;
+        }
+    }
+
+    function handleSelectChange(selectElement) {
+        // Add blue border class when a value is selected
+        if (selectElement.value) {
+            selectElement.classList.add('is-selected');
+        } else {
+            selectElement.classList.remove('is-selected');
+        }
+    }
+
+    function saveTask() {
+        // Get form values
+        const groupTripSelect = document.getElementById('groupTripSelect');
+        const taskName = document.getElementById('taskName').value;
+        const taskDueDate = document.getElementById('taskDueDate').value;
+        const taskNotes = document.getElementById('taskNotes').value;
+        const isCompleted = document.getElementById('completedCheck').checked;
+
+        // Validate required fields
+        if (!taskName) {
+            alert('Please enter a task name');
+            return;
+        }
+
+        // Get the selected group/trip text
+        const selectedOption = groupTripSelect.options[groupTripSelect.selectedIndex];
+        const groupTripText = selectedOption.text;
+        const groupTripValue = selectedOption.value;
+
+        // Extract client name from the group/trip text (e.g., "Trip Name (Client Name)")
+        const match = groupTripText.match(/\(([^)]+)\)$/);
+        const clientName = match ? match[1] : '';
+
+        // Create task object
+        const task = {
+            id: Date.now(),
+            name: taskName,
+            dueDate: taskDueDate,
+            notes: taskNotes,
+            completed: isCompleted,
+            groupTrip: groupTripText,
+            groupTripValue: groupTripValue,
+            client: clientName !== 'Group' ? clientName : ''
+        };
+
+        // Add task to array
+        tasks.push(task);
+
+        // Update the table
+        renderTasks();
+
+        // Update counts
+        updateCounts();
+
+        // Close the modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('createTaskModal'));
+        modal.hide();
+
+        // Reset the form
+        document.getElementById('createTaskForm').reset();
+        document.getElementById('groupTripSelect').classList.remove('is-selected');
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
+
+    function renderTasks() {
+        const tbody = document.getElementById('tasksTableBody');
+        const emptyState = document.getElementById('emptyState');
+
+        // Get filtered tasks
+        const filteredTasks = getFilteredTasks();
+
+        if (filteredTasks.length === 0) {
+            emptyState.style.display = '';
+            // Clear existing task rows (except empty state)
+            const existingRows = tbody.querySelectorAll('tr:not(#emptyState)');
+            existingRows.forEach(row => row.remove());
+            updateFooter();
+            return;
+        }
+
+        // Hide empty state
+        emptyState.style.display = 'none';
+
+        // Clear existing task rows (except empty state)
+        const existingRows = tbody.querySelectorAll('tr:not(#emptyState)');
+        existingRows.forEach(row => row.remove());
+
+        // Add task rows
+        filteredTasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <input type="checkbox" class="form-check-input me-2" ${task.completed ? 'checked' : ''}>
+                    ${task.name}
+                </td>
+                <td>${formatDate(task.dueDate)}</td>
+                <td></td>
+                <td></td>
+                <td>${task.client}</td>
+                <td>
+                    <a href="#" class="text-decoration-none">${task.groupTrip}</a>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        // Update footer
+        updateFooter();
+    }
+
+    function updateCounts() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const nextWeek = new Date(today);
+        nextWeek.setDate(nextWeek.getDate() + 7);
+
+        const allCount = tasks.filter(t => !t.completed).length;
+
+        const overdueCount = tasks.filter(t => {
+            if (!t.dueDate || t.completed) return false;
+            const dueDate = new Date(t.dueDate);
+            dueDate.setHours(0, 0, 0, 0);
+            return dueDate < today;
+        }).length;
+
+        const todayCount = tasks.filter(t => {
+            if (!t.dueDate || t.completed) return false;
+            const dueDate = new Date(t.dueDate);
+            dueDate.setHours(0, 0, 0, 0);
+            return dueDate.getTime() === today.getTime();
+        }).length;
+
+        const thisWeekCount = tasks.filter(t => {
+            if (!t.dueDate || t.completed) return false;
+            const dueDate = new Date(t.dueDate);
+            dueDate.setHours(0, 0, 0, 0);
+            return dueDate >= today && dueDate < nextWeek;
+        }).length;
+
+        const completedCount = tasks.filter(t => t.completed).length;
+
+        document.getElementById('countAll').textContent = allCount;
+        document.getElementById('countOverdue').textContent = overdueCount;
+        document.getElementById('countToday').textContent = todayCount;
+        document.getElementById('countThisWeek').textContent = thisWeekCount;
+        document.getElementById('countCompleted').textContent = completedCount;
+    }
+
+    function updateFooter() {
+        const filteredTasks = getFilteredTasks();
+        const count = filteredTasks.length;
+        const footer = document.getElementById('tasksFooter');
+        if (count === 0) {
+            footer.textContent = 'Showing 0 to 0 of 0 entries';
+        } else {
+            footer.textContent = `Showing ${count} task${count === 1 ? '' : 's'}`;
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateFooter();
+    });
+</script>

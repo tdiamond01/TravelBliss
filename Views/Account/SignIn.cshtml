@@ -61,12 +61,8 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // Since we're not saving to backend, just show success message and redirect
-        alert(`Welcome back! You've successfully signed in.`);
-
-        // In a real app, you would authenticate and redirect to dashboard
-        // For now, redirect to home page
-        window.location.href = '@Url.Action("Index", "Home")';
+        // Redirect to dashboard after sign in
+        window.location.href = '@Url.Action("Index", "Dashboard")';
 
         return false;
     }

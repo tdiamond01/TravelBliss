@@ -1,0 +1,232 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dashboard-content">
+    <!-- Top Bar -->
+    <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">Dashboard <i class="bi bi-gear-fill text-muted"></i></h2>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary active">Active (1)</button>
+            <button class="btn btn-outline-secondary">Archived (0)</button>
+        </div>
+    </div>
+
+    <!-- Welcome Card -->
+    <div class="welcome-card card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-2">Welcome Travis!</h4>
+            <p class="text-muted mb-4">What would you like to do today?</p>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="#" class="quick-action-link text-decoration-none">
+                        <i class="bi bi-file-earmark-text text-primary"></i> Send a form
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="quick-action-link text-decoration-none">
+                        <i class="bi bi-file-earmark-richtext text-info"></i> Create a proposal
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="quick-action-link text-decoration-none">
+                        <i class="bi bi-receipt text-primary"></i> Send an invoice
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="quick-action-link text-decoration-none">
+                        <i class="bi bi-map text-info"></i> Create an itinerary
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="quick-action-link text-decoration-none">
+                        <i class="bi bi-calendar-week text-primary"></i> Publish a group booking page
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Tiles -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-2">
+            <div class="stat-card stat-card-primary" id="stat-all" onclick="filterByStage('all')" style="cursor: pointer;">
+                <div class="stat-number">1</div>
+                <div class="stat-label">All</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-card" id="stat-inquiry" onclick="filterByStage('inquiry')" style="cursor: pointer;">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Inquiry</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-card" id="stat-followup" onclick="filterByStage('followup')" style="cursor: pointer;">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Follow Up</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-card" id="stat-proposalsent" onclick="filterByStage('proposalsent')" style="cursor: pointer;">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Proposal Sent</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-card" id="stat-proposalapproved" onclick="filterByStage('proposalapproved')" style="cursor: pointer;">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Proposal Approved</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="stat-card" id="stat-tripbooked" onclick="filterByStage('tripbooked')" style="cursor: pointer;">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Trip Booked</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Tabs and Data Table - Only shown when count > 0 -->
+    <div id="dataSection">
+        <!-- Filter Tabs -->
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center">
+                    <span class="fw-bold me-3">WAITING ON</span>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-primary">All (1)</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Me (1)</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Client (0)</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Supplier (0)</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">None (0)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>GROUP/TRIP</th>
+                                <th>CLIENT</th>
+                                <th>DATE</th>
+                                <th>UPDATED</th>
+                                <th>STAGE</th>
+                                <th>WAITING ON</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="group-row" data-bs-toggle="collapse" data-bs-target="#group1" aria-expanded="false">
+                                <td>
+                                    <i class="bi bi-chevron-right collapse-icon"></i>
+                                    <i class="bi bi-people-fill text-primary"></i>
+                                    <strong>Travis Diamond's TEST Group</strong>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Groups", new { id = 1 })" class="btn btn-sm btn-outline-primary" onclick="event.stopPropagation();">View group</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" class="p-0">
+                                    <div class="collapse" id="group1">
+                                        <div class="p-3 bg-light">
+                                            <table class="table table-sm mb-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><i class="bi bi-dash-lg"></i> Individual trips (1)</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr class="trip-row">
+                                                        <td class="ps-5">Travis Diamond's TEST Trip</td>
+                                                        <td>Travis Diamond</td>
+                                                        <td>November 8, 2025</td>
+                                                        <td>22 minutes</td>
+                                                        <td>
+                                                            <select class="form-select form-select-sm">
+                                                                <option selected>Inquiry</option>
+                                                                <option>Follow Up</option>
+                                                                <option>Proposal</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select class="form-select form-select-sm">
+                                                                <option selected>Me</option>
+                                                                <option>Client</option>
+                                                                <option>Supplier</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-secondary">Archive</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filterByStage(stage) {
+            // Get the count for the selected stage
+            const counts = {
+                'all': 1,
+                'inquiry': 1,
+                'followup': 0,
+                'proposalsent': 0,
+                'proposalapproved': 0,
+                'tripbooked': 0
+            };
+
+            // Remove active class from all stat cards
+            document.querySelectorAll('.stat-card').forEach(card => {
+                card.classList.remove('stat-card-primary');
+            });
+
+            // Add active class to clicked stat card
+            const clickedCard = document.getElementById('stat-' + stage);
+            if (clickedCard) {
+                clickedCard.classList.add('stat-card-primary');
+            }
+
+            const dataSection = document.getElementById('dataSection');
+
+            // Show or hide the data section based on count
+            if (counts[stage] > 0) {
+                dataSection.style.display = 'block';
+            } else {
+                dataSection.style.display = 'none';
+            }
+        }
+
+        // Initialize on page load - show data since "All" has count > 0
+        document.addEventListener('DOMContentLoaded', function() {
+            filterByStage('all');
+        });
+    </script>
+</div>
