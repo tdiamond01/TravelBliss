@@ -1,0 +1,208 @@
+@model TravelBliss.Models.Contact
+
+<div class="contact-detail-modal">
+    <div class="modal-header">
+        <h2>@Model.FullName</h2>
+        <button class="close-btn" onclick="closeContactModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+        <div class="contact-sidebar">
+            <div class="sidebar-item active" data-section="contact-info">
+                <i class="fas fa-user"></i> Contact info
+            </div>
+            <div class="sidebar-item" data-section="relationships">
+                <i class="fas fa-users"></i> Relationships
+            </div>
+            <div class="sidebar-item" data-section="loyalty">
+                <i class="fas fa-award"></i> Loyalty programs
+            </div>
+            <div class="sidebar-item" data-section="dates">
+                <i class="fas fa-birthday-cake"></i> Important dates
+            </div>
+            <div class="sidebar-item" data-section="preferences">
+                <i class="fas fa-check-square"></i> Travel preferences
+            </div>
+            <div class="sidebar-item" data-section="passport">
+                <i class="fas fa-passport"></i> Passport info
+            </div>
+            <div class="sidebar-item" data-section="vaccine">
+                <i class="fas fa-syringe"></i> Vaccine info
+            </div>
+            <div class="sidebar-item" data-section="payment">
+                <i class="fas fa-credit-card"></i> Payment info
+            </div>
+            <div class="sidebar-item" data-section="notes">
+                <i class="fas fa-sticky-note"></i> Notes
+            </div>
+            <div class="sidebar-item" data-section="trips">
+                <i class="fas fa-plane"></i> Trips
+            </div>
+        </div>
+
+        <div class="contact-content">
+            <form id="contactForm">
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <div class="form-actions-top">
+                    <button type="button" class="btn-outline">
+                        <i class="fas fa-paper-plane"></i> Send profile update form
+                    </button>
+                    <button type="button" class="btn-outline">
+                        <i class="fas fa-envelope"></i> Client messages
+                    </button>
+                </div>
+
+                <div class="form-note">
+                    <em>Last requested: never</em>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="FirstName">First name <span class="required">*</span></label>
+                            <input type="text" id="FirstName" name="FirstName" value="@Model.FirstName" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="MiddleName">Middle name</label>
+                            <input type="text" id="MiddleName" name="MiddleName" value="@Model.MiddleName" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="LastName">Last name <span class="required">*</span></label>
+                            <input type="text" id="LastName" name="LastName" value="@Model.LastName" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <a href="#" class="link-blue">+ Show more name fields</a>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Primary email</h3>
+                    <p class="form-note-text">Note: The primary email is the email address that TravelJoy will send messages to.</p>
+
+                    <div class="form-row-inline">
+                        <select class="form-control-small">
+                            <option>ex Home, Work...</option>
+                        </select>
+                        <input type="email" name="PrimaryEmail" value="@Model.PrimaryEmail" class="form-control-flex" />
+                    </div>
+                    <a href="#" class="link-blue">Add email</a>
+                </div>
+
+                <div class="form-section">
+                    <h3>Phone number</h3>
+                    <div class="form-row-inline">
+                        <select class="form-control-small">
+                            <option>ex Home, Work...</option>
+                        </select>
+                        <input type="tel" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control-flex" placeholder="Phone number" />
+                    </div>
+                    <a href="#" class="link-blue">Add phone number</a>
+                </div>
+
+                <div class="form-section">
+                    <h3>Address</h3>
+                    <div class="form-row-inline">
+                        <select class="form-control-small">
+                            <option>ex Home, Work...</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" name="Address1" value="@Model.Address1" class="form-control" placeholder="Address 1" />
+                    </div>
+                    <div class="form-row">
+                        <input type="text" name="Address2" value="@Model.Address2" class="form-control" placeholder="Address 2" />
+                    </div>
+                    <div class="form-row-grid">
+                        <input type="text" name="City" value="@Model.City" class="form-control" placeholder="City" />
+                        <input type="text" name="State" value="@Model.State" class="form-control" placeholder="State" />
+                        <input type="text" name="Zip" value="@Model.Zip" class="form-control" placeholder="Zip" />
+                        <input type="text" name="Country" value="@Model.Country" class="form-control" placeholder="Country" />
+                    </div>
+                    <a href="#" class="link-blue">Add address</a>
+                </div>
+
+                <div class="form-section">
+                    <h3>Tags</h3>
+                    <input type="text" name="Tags" value="@Model.Tags" class="form-control" placeholder="Add Tag" />
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row-dual">
+                        <div class="form-group-flex">
+                            <label for="Website">Website</label>
+                            <input type="url" name="Website" value="" class="form-control" placeholder="" />
+                        </div>
+                        <div class="form-group-flex">
+                            <label for="JobTitle">Job title</label>
+                            <input type="text" name="JobTitle" value="" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row-dual">
+                        <div class="form-group-flex">
+                            <label for="Company">Company</label>
+                            <input type="text" name="Company" value="" class="form-control" placeholder="" />
+                        </div>
+                        <div class="form-group-flex">
+                            <label for="FacebookProfile">Facebook profile</label>
+                            <input type="url" name="FacebookProfile" value="" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row-dual">
+                        <div class="form-group-flex">
+                            <label for="LinkedInProfile">LinkedIn profile</label>
+                            <input type="url" name="LinkedInProfile" value="" class="form-control" placeholder="" />
+                        </div>
+                        <div class="form-group-flex">
+                            <label for="TwitterProfile">Twitter profile</label>
+                            <input type="url" name="TwitterProfile" value="" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="InstagramProfile">Instagram profile</label>
+                            <input type="url" name="InstagramProfile" value="" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-danger" onclick="deleteContact(@Model.Id)">Delete</button>
+                    <button type="button" class="btn-outline" onclick="archiveContact(@Model.Id)">Archive</button>
+                    <div class="footer-right">
+                        <button type="button" class="btn-secondary" onclick="closeContactModal()">Cancel</button>
+                        <button type="button" class="btn-primary" onclick="saveContact()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Section navigation
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.addEventListener('click', function() {
+            document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            // In a real app, this would show/hide different sections
+        });
+    });
+</script>

@@ -1,0 +1,223 @@
+@model List<TravelBliss.Models.Contact>
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="contacts-page">
+    <div class="contacts-header">
+        <h1>Contacts</h1>
+    </div>
+
+    <div class="contacts-tabs">
+        <button class="tab-button active" data-tab="clients">
+            Clients (1)
+        </button>
+        <button class="tab-button" data-tab="suppliers">
+            Suppliers (0)
+        </button>
+        <button class="tab-button" data-tab="dates">
+            Important dates
+        </button>
+        <button class="tab-button" data-tab="opportunities">
+            Opportunities (0)
+        </button>
+    </div>
+
+    <div class="contacts-filter-tabs">
+        <button class="filter-tab active" data-filter="active">
+            Active (1)
+        </button>
+        <button class="filter-tab" data-filter="archived">
+            Archived (0)
+        </button>
+    </div>
+
+    <div class="contacts-toolbar">
+        <div class="view-buttons">
+            <button class="view-btn active" data-view="grid">
+                <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" data-view="list">
+                <i class="fas fa-bars"></i>
+            </button>
+            <button class="view-btn" data-view="compact">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+        <button class="btn-primary add-client-btn">
+            <i class="fas fa-plus"></i> Add client
+        </button>
+    </div>
+
+    <div class="contacts-grid" id="contactsGrid">
+        @foreach (var contact in Model)
+        {
+            <div class="contact-card" data-contact-id="@contact.Id">
+                <div class="contact-avatar">
+                    @contact.Initials
+                </div>
+                <div class="contact-info">
+                    <div class="contact-name">
+                        @contact.FullName
+                        @if (contact.TripCount > 0)
+                        {
+                            <span class="trip-badge">@contact.TripCount trip</span>
+                        }
+                    </div>
+                    <div class="contact-email">@contact.PrimaryEmail</div>
+                </div>
+                <div class="contact-actions">
+                    <button class="icon-btn edit-btn" data-action="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="icon-btn archive-btn" data-action="archive">
+                        <i class="fas fa-archive"></i>
+                    </button>
+                    <button class="icon-btn delete-btn" data-action="delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Contact Detail Modal -->
+<div id="contactModal" class="contact-modal" style="display: none;">
+    <div class="modal-content-large">
+        <div id="contactModalContent">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function() {
+        console.log('Contacts jQuery script loaded');
+
+        // Click handler for contact cards
+        $('.contact-card').on('click', function(e) {
+            // Don't open if clicking on action buttons themselves
+            if ($(e.target).closest('button').length) {
+                return;
+            }
+
+            var contactId = $(this).data('contact-id');
+            console.log('Opening contact modal for ID:', contactId);
+            openContactModal(contactId);
+        });
+
+        // Action button handlers
+        $('.edit-btn').on('click', function(e) {
+            e.stopPropagation();
+            var contactId = $(this).closest('.contact-card').data('contact-id');
+            openContactModal(contactId);
+        });
+
+        $('.archive-btn').on('click', function(e) {
+            e.stopPropagation();
+            var contactId = $(this).closest('.contact-card').data('contact-id');
+            archiveContact(contactId);
+        });
+
+        $('.delete-btn').on('click', function(e) {
+            e.stopPropagation();
+            var contactId = $(this).closest('.contact-card').data('contact-id');
+            deleteContact(contactId);
+        });
+
+        // Close modal when clicking outside
+        $('#contactModal').on('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+    });
+
+    function openContactModal(contactId) {
+        console.log('Fetching contact:', contactId);
+        fetch(`/Contacts/GetContact?id=${contactId}`)
+            .then(response => {
+                console.log('Response received:', response.status);
+                return response.text();
+            })
+            .then(html => {
+                console.log('HTML received, length:', html.length);
+                $('#contactModalContent').html(html);
+                $('#contactModal').css('display', 'flex');
+            })
+            .catch(error => {
+                console.error('Error loading contact:', error);
+            });
+    }
+
+    function closeContactModal() {
+        $('#contactModal').css('display', 'none');
+    }
+
+    function saveContact() {
+        const form = document.getElementById('contactForm');
+        const formData = new FormData(form);
+        const contact = {};
+
+        formData.forEach((value, key) => {
+            contact[key] = value;
+        });
+
+        fetch('/Contacts/SaveContact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(contact)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Contact saved successfully!');
+                closeContactModal();
+                location.reload();
+            }
+        });
+    }
+
+    function archiveContact(contactId) {
+        if (confirm('Are you sure you want to archive this contact?')) {
+            fetch('/Contacts/ArchiveContact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: contactId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            });
+        }
+    }
+
+    function deleteContact(contactId) {
+        if (confirm('Are you sure you want to delete this contact? This action cannot be undone.')) {
+            fetch('/Contacts/DeleteContact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: contactId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            });
+        }
+    }
+</script>
+}
+
