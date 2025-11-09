@@ -335,6 +335,14 @@
     flex: 1;
     padding: 30px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-content form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 /* Form Styles */
@@ -475,9 +483,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0 0 0;
+    padding: 20px 0;
     border-top: 1px solid #e0e0e0;
-    margin-top: 30px;
+    margin-top: auto;
+    flex-shrink: 0;
+    background-color: white;
+    position: sticky;
+    bottom: 0;
 }
 
 .footer-right {
