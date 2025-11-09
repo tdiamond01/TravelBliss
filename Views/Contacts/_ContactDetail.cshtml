@@ -44,6 +44,8 @@
             <form id="contactForm">
                 <input type="hidden" name="Id" value="@Model.Id" />
 
+                <div class="form-scrollable-content">
+
                 <div class="form-actions-top">
                     <button type="button" class="btn-outline">
                         <i class="fas fa-paper-plane"></i> Send profile update form
@@ -182,6 +184,8 @@
                         </div>
                     </div>
                 </div>
+
+                </div><!-- End form-scrollable-content -->
 
                 <div class="modal-footer">
                     <button type="button" class="btn-danger" onclick="deleteContact(@Model.Id)">Delete</button>
