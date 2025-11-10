@@ -254,18 +254,188 @@
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+  display: none;
+}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
+  /* Show mobile menu toggle */
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  /* Hide search on very small screens */
+  .search-box {
+    display: none;
+  }
+
+  /* Adjust topbar padding */
+  .dashboard-topbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem !important;
+    margin-right: 0 !important;
+  }
+
+  /* Mobile sidebar */
   .dashboard-sidebar {
     transform: translateX(-100%);
-    transition: transform 0.3s;
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+    width: 250px;
+  }
+
+  .dashboard-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Remove left margin on main content */
+  .dashboard-main {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  /* Stack statistics cards */
+  .stat-card {
+    padding: 1rem 0.75rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  /* Adjust table for mobile */
+  .table {
+    font-size: 0.875rem;
+  }
+
+  /* Chat widget adjustments */
+  .chat-text {
+    display: none;
+  }
+
+  .chat-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  /* Welcome card spacing */
+  .welcome-card {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Setup indicator text */
+  .setup-indicator {
+    font-size: 0.75rem;
+  }
+
+  /* Dashboard header */
+  .dashboard-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 15px;
+  }
+
+  .dashboard-header .d-flex {
+    width: 100%;
+  }
+
+  .dashboard-header .btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Welcome card */
+  .welcome-card .card-body {
+    padding: 1.5rem !important;
+  }
+
+  .welcome-card h4 {
+    font-size: 1.25rem;
+  }
+
+  .welcome-card .col-md-6 {
+    width: 100%;
+  }
+
+  /* Filter tabs in dashboard */
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .btn-group .btn {
+    flex: 1 1 auto;
+    font-size: 0.75rem;
+  }
+
+  /* Data table scrolling */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table {
+    min-width: 600px;
+  }
+
+  /* Hide some table columns on mobile */
+  .table th:nth-child(3),
+  .table td:nth-child(3),
+  .table th:nth-child(4),
+  .table td:nth-child(4) {
+    display: none;
+  }
+
+  /* Form selects in table */
+  .form-select-sm {
+    font-size: 0.75rem;
+  }
+}
+
+/* Tablets and medium screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard-sidebar {
+    width: 180px;
   }
 
   .dashboard-main {
-    margin-left: 0;
+    margin-left: 180px;
   }
 
   .search-box {
-    max-width: 300px;
+    max-width: 350px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1025px) {
+  .search-box {
+    max-width: 500px;
   }
 }

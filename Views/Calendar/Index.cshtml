@@ -137,6 +137,85 @@
 .calendar-event:hover {
     background: #0b5ed7;
 }
+
+/* Mobile responsive styles */
+@@media (max-width: 768px) {
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 15px;
+    }
+
+    .d-flex.gap-2 button {
+        font-size: 0.875rem;
+        padding: 0.5rem;
+    }
+
+    .btn-outline-primary {
+        font-size: 0.875rem;
+    }
+
+    h3#currentMonth {
+        font-size: 1.25rem;
+    }
+
+    .btn-group {
+        width: 100%;
+    }
+
+    .btn-group .btn-sm {
+        flex: 1;
+        font-size: 0.75rem;
+    }
+
+    .calendar-cell {
+        min-height: 80px;
+        padding: 0.25rem;
+    }
+
+    .calendar-day-header {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .calendar-date {
+        font-size: 0.75rem;
+    }
+
+    .calendar-event {
+        font-size: 0.65rem;
+        padding: 0.125rem 0.25rem;
+    }
+
+    .card {
+        border-radius: 0.5rem;
+    }
+}
+
+@@media (max-width: 480px) {
+    .calendar-cell {
+        min-height: 60px;
+    }
+
+    .calendar-day-header {
+        padding: 0.25rem;
+        font-size: 0.65rem;
+    }
+
+    .calendar-date {
+        font-size: 0.65rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .calendar-event {
+        font-size: 0.6rem;
+        padding: 0.1rem 0.2rem;
+    }
+
+    h3#currentMonth {
+        font-size: 1rem;
+    }
+}
 </style>
 
 <script>
