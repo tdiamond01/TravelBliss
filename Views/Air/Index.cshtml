@@ -1,0 +1,561 @@
+@{
+    ViewData["Title"] = "Flight Search";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<!-- Hero Section with Cloud Background -->
+<div class="air-hero">
+    <div class="air-hero-content">
+        <h1 class="air-hero-title">TravelBliss</h1>
+        <p class="air-hero-subtitle">FLIGHT SEARCH</p>
+    </div>
+</div>
+
+<!-- Search Form -->
+<div class="air-search-container">
+    <div class="air-search-card">
+        <div class="air-search-options">
+            <div class="air-option-group">
+                <span class="air-icon-wrapper"><i class="bi bi-geo-alt"></i></span>
+                <select class="air-select">
+                    <option>Round trip</option>
+                    <option>One way</option>
+                    <option>Multi-city</option>
+                </select>
+            </div>
+            <div class="air-option-group">
+                <span class="air-icon-wrapper"><i class="bi bi-grid-3x3"></i></span>
+                <select class="air-select">
+                    <option>Business</option>
+                    <option>Economy</option>
+                    <option>First Class</option>
+                    <option>Premium Economy</option>
+                </select>
+            </div>
+            <div class="air-option-group">
+                <span class="air-icon-wrapper"><i class="bi bi-people"></i></span>
+                <select class="air-select">
+                    <option>Travelers</option>
+                    <option>1 Traveler</option>
+                    <option>2 Travelers</option>
+                    <option>3 Travelers</option>
+                    <option>4+ Travelers</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="air-search-inputs">
+            <div class="air-input-group">
+                <i class="bi bi-airplane"></i>
+                <select class="form-select air-city-select">
+                    <option>Seattle SEA</option>
+                    <option>San Francisco SFO</option>
+                    <option>Portland PDX</option>
+                </select>
+            </div>
+
+            <button class="air-swap-btn" type="button">
+                <i class="bi bi-arrow-left-right"></i>
+            </button>
+
+            <div class="air-input-group">
+                <i class="bi bi-airplane-fill"></i>
+                <select class="form-select air-city-select">
+                    <option>Los Angeles LAX</option>
+                    <option>New York JFK</option>
+                    <option>Chicago ORD</option>
+                </select>
+            </div>
+
+            <div class="air-input-group air-date-input">
+                <i class="bi bi-calendar3"></i>
+                <input type="text" class="form-control" value="04/09/2025 - 04/11/2025" readonly>
+            </div>
+        </div>
+
+        <div class="air-search-btn-container">
+            <button class="btn btn-primary air-search-btn">SEARCH</button>
+        </div>
+    </div>
+</div>
+
+<!-- Results section (hidden by default, shown after search) -->
+<div class="air-results-section" style="display: none;">
+    <div class="air-compare-header">
+        <h2>Compare Flight Options</h2>
+        <select class="form-select air-sort-select">
+            <option>Lowest Price</option>
+            <option>Highest Price</option>
+            <option>Shortest Duration</option>
+            <option>Longest Duration</option>
+            <option>Earliest Departure</option>
+        </select>
+    </div>
+
+    <div class="air-compare-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>All Flights</th>
+                    <th><img src="~/images/airlines/alaska.png" class="airline-icon" alt="Alaska"> Alaska Airlines</th>
+                    <th><img src="~/images/airlines/american.png" class="airline-icon" alt="American"> American Airlines</th>
+                    <th><img src="~/images/airlines/united.png" class="airline-icon" alt="United"> United Airlines</th>
+                    <th><img src="~/images/airlines/delta.png" class="airline-icon" alt="Delta"> Delta Airlines</th>
+                    <th><i class="bi bi-square-fill text-danger"></i> Emirates Airlines</th>
+                    <th><img src="~/images/airlines/alaska.png" class="airline-icon" alt="Alaska"> Alaska Airlines</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Direct</td>
+                    <td>$248.23</td>
+                    <td>$248.23</td>
+                    <td>$248.23</td>
+                    <td>$248.23</td>
+                    <td class="price-highlight">$348.23</td>
+                    <td class="price-highlight">$348.23</td>
+                </tr>
+                <tr>
+                    <td>1 Stop</td>
+                    <td>$248.23</td>
+                    <td class="price-highlight">$348.23</td>
+                    <td class="price-highlight">$348.23</td>
+                    <td>$248.23</td>
+                    <td></td>
+                    <td>$248.23</td>
+                </tr>
+                <tr>
+                    <td>2+ Stops</td>
+                    <td class="price-highlight">$348.23</td>
+                    <td>$248.23</td>
+                    <td></td>
+                    <td class="price-highlight">$348.23</td>
+                    <td></td>
+                    <td>$248.23</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Filters -->
+    <div class="air-filters">
+        <button class="btn btn-outline-primary air-filter-btn">
+            <i class="bi bi-funnel"></i> All Filters
+        </button>
+        <select class="form-select air-filter-select" id="stopsFilter">
+            <option value="">Stops</option>
+            <option value="0">Direct</option>
+            <option value="1">1 Stop</option>
+            <option value="2">2+ Stops</option>
+        </select>
+        <select class="form-select air-filter-select" id="airlinesFilter">
+            <option value="">Airlines</option>
+            <option value="Alaska Airlines">Alaska Airlines</option>
+            <option value="American Airlines">American Airlines</option>
+            <option value="United Airlines">United Airlines</option>
+            <option value="Delta Airlines">Delta Airlines</option>
+        </select>
+        <select class="form-select air-filter-select">
+            <option>Refundable</option>
+            <option>Refundable Only</option>
+            <option>Non-Refundable</option>
+        </select>
+        <select class="form-select air-filter-select">
+            <option>Departure time</option>
+        </select>
+        <select class="form-select air-filter-select">
+            <option>Arrival time</option>
+        </select>
+    </div>
+
+    <!-- Flight Results Header -->
+    <div class="air-results-header">
+        <h3>Flights from SEA - LAX - May 21, 2025</h3>
+        <select class="form-select air-sort-select">
+            <option>Sort by</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+            <option>Duration: Shortest</option>
+            <option>Departure: Earliest</option>
+        </select>
+    </div>
+
+    <!-- Flight Results List -->
+    <div class="air-results-list">
+        <!-- Flight 1: Alaska Airlines -->
+        <div class="air-flight-card" data-price="689" data-duration="920" data-departure="0800" data-stops="2" data-airline="Alaska Airlines">
+            <div class="air-flight-main">
+                <div class="air-flight-airline">
+                    <div class="airline-logo-circle">
+                        <img src="~/images/airlines/alaska.png" alt="Alaska Airlines" class="airline-logo" />
+                    </div>
+                    <div>
+                        <div class="airline-name">Alaska Airlines</div>
+                    </div>
+                </div>
+                <div class="air-flight-time">
+                    <div class="flight-time-main">8:00 AM - 11:20 PM</div>
+                </div>
+                <div class="air-flight-duration">
+                    <div>15 hr 20 min</div>
+                    <div class="text-muted small">SEA - LAX</div>
+                </div>
+                <div class="air-flight-stops">
+                    <div>2 stops</div>
+                    <div class="text-muted small">SFO, PHX</div>
+                </div>
+                <div class="air-flight-price">
+                    <div class="flight-price-main">$689</div>
+                    <div class="flight-commission">Comm: $274.15</div>
+                    <a href="#" class="price-breakdown-link">Price Breakdown</a>
+                </div>
+                <button class="btn btn-outline-primary btn-sm air-expand-btn" data-bs-toggle="collapse" data-bs-target="#flight1Details">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div class="collapse" id="flight1Details">
+                <div class="air-flight-details">
+                    <div class="flight-details-tabs">
+                        <button class="flight-tab">Branded Fare Options</button>
+                        <button class="flight-tab active">Flight Details</button>
+                    </div>
+                    <div class="flight-details-content">
+                        <div class="flight-itinerary">
+                            <div class="itinerary-segment">
+                                <div class="itinerary-time">8:25 AM</div>
+                                <div class="itinerary-line">
+                                    <div class="itinerary-dot"></div>
+                                    <div class="itinerary-connector"></div>
+                                </div>
+                                <div class="itinerary-info">
+                                    <div class="fw-bold">Seattle-Tacoma International Airport (SEA)</div>
+                                    <div class="text-muted small">Travel time: 1 hr 50 min</div>
+                                    <div class="text-muted small">WestJet · Economy · De Havilland-Bombardier Dash-8 · WS 3611</div>
+                                    <div class="text-muted small">Plane and crew by WestJet Encore</div>
+                                </div>
+                                <div class="itinerary-amenities">
+                                    <span class="badge bg-light text-dark">30 in</span>
+                                    <span class="badge bg-light text-dark">91 kg CO₂e</span>
+                                </div>
+                            </div>
+                            <div class="itinerary-layover">
+                                <i class="bi bi-clock"></i> 7 hr layover · Calgary (YYC)
+                            </div>
+                            <div class="itinerary-segment">
+                                <div class="itinerary-time">6:15 PM</div>
+                                <div class="itinerary-line">
+                                    <div class="itinerary-dot"></div>
+                                </div>
+                                <div class="itinerary-info">
+                                    <div class="fw-bold">Calgary International Airport (YYC)</div>
+                                    <div class="text-muted small">Travel time: 8 hr 40 min</div>
+                                    <div class="badge bg-warning text-dark">Overnight</div>
+                                </div>
+                                <div class="itinerary-amenities">
+                                    <span class="badge bg-light text-dark">31 in</span>
+                                    <span class="badge bg-light text-dark">Wi-Fi</span>
+                                    <span class="badge bg-light text-dark">Power</span>
+                                    <span class="badge bg-light text-dark">Entertainment</span>
+                                    <span class="badge bg-light text-dark">411 kg CO₂e</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flight 2: American Airlines -->
+        <div class="air-flight-card" data-price="325" data-duration="155" data-departure="1430" data-stops="0" data-airline="American Airlines">
+            <div class="air-flight-main">
+                <div class="air-flight-airline">
+                    <div class="airline-logo-circle">
+                        <img src="~/images/airlines/american.png" alt="American Airlines" class="airline-logo" />
+                    </div>
+                    <div>
+                        <div class="airline-name">American Airlines</div>
+                        <div class="text-muted small">Operated by Alaska Airlines</div>
+                    </div>
+                </div>
+                <div class="air-flight-time">
+                    <div class="flight-time-main">2:30 PM - 5:05 PM</div>
+                </div>
+                <div class="air-flight-duration">
+                    <div>2 hr 35 min</div>
+                    <div class="text-muted small">SEA - LAX</div>
+                </div>
+                <div class="air-flight-stops">
+                    <div>Nonstop</div>
+                    <div class="text-muted small">Direct flight</div>
+                </div>
+                <div class="air-flight-price">
+                    <div class="flight-price-main">$325</div>
+                    <div class="flight-commission">Comm: $129.38</div>
+                    <a href="#" class="price-breakdown-link">Price Breakdown</a>
+                </div>
+                <button class="btn btn-outline-primary btn-sm air-expand-btn">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Flight 3: United Airlines -->
+        <div class="air-flight-card" data-price="445" data-duration="420" data-departure="1100" data-stops="1" data-airline="United Airlines">
+            <div class="air-flight-main">
+                <div class="air-flight-airline">
+                    <div class="airline-logo-circle">
+                        <img src="~/images/airlines/united.png" alt="United Airlines" class="airline-logo" />
+                    </div>
+                    <div>
+                        <div class="airline-name">United Airlines</div>
+                    </div>
+                </div>
+                <div class="air-flight-time">
+                    <div class="flight-time-main">11:00 AM - 6:00 PM</div>
+                </div>
+                <div class="air-flight-duration">
+                    <div>7 hr 0 min</div>
+                    <div class="text-muted small">SEA - LAX</div>
+                </div>
+                <div class="air-flight-stops">
+                    <div>1 stop</div>
+                    <div class="text-muted small">1 hr 45 min DEN</div>
+                </div>
+                <div class="air-flight-price">
+                    <div class="flight-price-main">$445</div>
+                    <div class="flight-commission">Comm: $177.08</div>
+                    <a href="#" class="price-breakdown-link">Price Breakdown</a>
+                </div>
+                <button class="btn btn-outline-primary btn-sm air-expand-btn">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Flight 4: Delta Airlines -->
+        <div class="air-flight-card" data-price="299" data-duration="165" data-departure="0630" data-stops="0" data-airline="Delta Airlines">
+            <div class="air-flight-main">
+                <div class="air-flight-airline">
+                    <div class="airline-logo-circle">
+                        <img src="~/images/airlines/delta.png" alt="Delta Airlines" class="airline-logo" />
+                    </div>
+                    <div>
+                        <div class="airline-name">Delta Airlines</div>
+                    </div>
+                </div>
+                <div class="air-flight-time">
+                    <div class="flight-time-main">6:30 AM - 9:15 AM</div>
+                </div>
+                <div class="air-flight-duration">
+                    <div>2 hr 45 min</div>
+                    <div class="text-muted small">SEA - LAX</div>
+                </div>
+                <div class="air-flight-stops">
+                    <div>Nonstop</div>
+                    <div class="text-muted small">Direct flight</div>
+                </div>
+                <div class="air-flight-price">
+                    <div class="flight-price-main">$299</div>
+                    <div class="flight-commission">Comm: $118.99</div>
+                    <a href="#" class="price-breakdown-link">Price Breakdown</a>
+                </div>
+                <button class="btn btn-outline-primary btn-sm air-expand-btn">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Flight details expand/collapse
+        document.querySelectorAll('.air-expand-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                icon.classList.toggle('bi-chevron-down');
+                icon.classList.toggle('bi-chevron-up');
+            });
+        });
+
+        // Swap cities button
+        document.querySelector('.air-swap-btn')?.addEventListener('click', function() {
+            const selects = document.querySelectorAll('.air-city-select');
+            if (selects.length >= 2) {
+                const temp = selects[0].selectedIndex;
+                selects[0].selectedIndex = selects[1].selectedIndex;
+                selects[1].selectedIndex = temp;
+            }
+        });
+
+        // Search button functionality
+        document.querySelector('.air-search-btn')?.addEventListener('click', function() {
+            const originSelect = document.querySelectorAll('.air-city-select')[0];
+            const destSelect = document.querySelectorAll('.air-city-select')[1];
+            const dateInput = document.querySelector('.air-date-input input');
+
+            // Get the airport codes
+            const originText = originSelect.options[originSelect.selectedIndex].text;
+            const destText = destSelect.options[destSelect.selectedIndex].text;
+            const dateText = dateInput.value;
+
+            // Extract codes (last 3 characters)
+            const originCode = originText.slice(-3);
+            const destCode = destText.slice(-3);
+
+            // Extract first date from range
+            const firstDate = dateText.split(' - ')[0];
+
+            // Update results header
+            const resultsHeader = document.querySelector('.air-results-header h3');
+            if (resultsHeader) {
+                resultsHeader.textContent = `Flights from ${originCode} - ${destCode} - ${firstDate}`;
+            }
+
+            // Update flight cards with the route
+            document.querySelectorAll('.air-flight-duration .text-muted').forEach(el => {
+                el.textContent = `${originCode} - ${destCode}`;
+            });
+
+            // Show results section
+            const resultsSection = document.querySelector('.air-results-section');
+            if (resultsSection) {
+                resultsSection.style.display = 'block';
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        // Sort functionality for Compare Flight Options table
+        document.querySelector('.air-compare-header .air-sort-select')?.addEventListener('change', function(e) {
+            const sortBy = e.target.value;
+            const table = document.querySelector('.air-compare-table table');
+            const tbody = table.querySelector('tbody');
+            const thead = table.querySelector('thead');
+
+            // Get all column data (excluding first column which is the row labels)
+            const headerRow = thead.querySelector('tr');
+            const allHeaders = Array.from(headerRow.querySelectorAll('th'));
+            const firstHeader = allHeaders[0]; // "All Flights" column
+            const headers = allHeaders.slice(1); // Airline columns
+
+            // Create array of column data with indices and cells
+            const columns = headers.map((th, index) => {
+                const colIndex = index + 1; // +1 because we're skipping first column
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+
+                // Store actual cell references for each row
+                const cells = rows.map(row => row.querySelectorAll('td')[colIndex]);
+
+                // Get all prices in this column
+                const prices = cells.map(cell => {
+                    const priceText = cell?.textContent.trim() || '';
+                    const priceMatch = priceText.match(/\$?([\d.]+)/);
+                    return priceMatch ? parseFloat(priceMatch[1]) : 999999;
+                });
+
+                // Calculate metrics for sorting
+                const minPrice = Math.min(...prices.filter(p => p < 999999));
+                const validPrices = prices.filter(p => p < 999999);
+                const avgDuration = validPrices.length > 0 ? validPrices.reduce((a, b, i) => a + b * i, 0) / validPrices.reduce((a, b) => a + b, 0) : 999;
+
+                return {
+                    originalIndex: colIndex,
+                    header: th,
+                    cells: cells,
+                    minPrice: minPrice,
+                    avgDuration: avgDuration
+                };
+            });
+
+            // Sort columns based on criteria
+            if (sortBy === 'Lowest Price' || sortBy === 'Highest Price') {
+                columns.sort((a, b) => {
+                    const diff = a.minPrice - b.minPrice;
+                    return sortBy === 'Lowest Price' ? diff : -diff;
+                });
+            } else if (sortBy === 'Shortest Duration' || sortBy === 'Longest Duration') {
+                // Shorter flights are assumed to have fewer stops (lower row index)
+                columns.sort((a, b) => {
+                    const diff = a.avgDuration - b.avgDuration;
+                    return sortBy === 'Shortest Duration' ? diff : -diff;
+                });
+            }
+
+            // Reorder the table columns
+            // Clear and rebuild header
+            headerRow.innerHTML = '';
+            headerRow.appendChild(firstHeader);
+            columns.forEach(col => headerRow.appendChild(col.header));
+
+            // Reorder body cells
+            const bodyRows = Array.from(tbody.querySelectorAll('tr'));
+            bodyRows.forEach((row, rowIndex) => {
+                const allCells = Array.from(row.querySelectorAll('td'));
+                const firstCell = allCells[0]; // Keep row label
+
+                row.innerHTML = '';
+                row.appendChild(firstCell);
+                columns.forEach(col => row.appendChild(col.cells[rowIndex]));
+            });
+        });
+
+        // Sort functionality - target the dropdown in the "Flights from..." section
+        document.querySelector('.air-results-header .air-sort-select')?.addEventListener('change', function(e) {
+            const sortBy = e.target.value;
+            const resultsList = document.querySelector('.air-results-list');
+            const cards = Array.from(resultsList.querySelectorAll('.air-flight-card'));
+
+            cards.sort((a, b) => {
+                if (sortBy === 'Price: Low to High') {
+                    return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                } else if (sortBy === 'Price: High to Low') {
+                    return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                } else if (sortBy === 'Duration: Shortest') {
+                    return parseInt(a.dataset.duration) - parseInt(b.dataset.duration);
+                } else if (sortBy === 'Departure: Earliest') {
+                    return parseInt(a.dataset.departure) - parseInt(b.dataset.departure);
+                }
+                return 0;
+            });
+
+            // Re-append sorted cards
+            cards.forEach(card => resultsList.appendChild(card));
+        });
+
+        // Filter functionality
+        function applyFilters() {
+            const stopsFilter = document.getElementById('stopsFilter')?.value;
+            const airlinesFilter = document.getElementById('airlinesFilter')?.value;
+            const cards = document.querySelectorAll('.air-flight-card');
+
+            cards.forEach(card => {
+                let showCard = true;
+
+                // Filter by stops
+                if (stopsFilter !== '') {
+                    const cardStops = card.dataset.stops;
+                    if (stopsFilter === '2') {
+                        // 2+ stops means 2 or more
+                        showCard = showCard && parseInt(cardStops) >= 2;
+                    } else {
+                        showCard = showCard && cardStops === stopsFilter;
+                    }
+                }
+
+                // Filter by airline
+                if (airlinesFilter !== '') {
+                    const cardAirline = card.dataset.airline;
+                    showCard = showCard && cardAirline === airlinesFilter;
+                }
+
+                // Show or hide the card
+                card.style.display = showCard ? '' : 'none';
+            });
+        }
+
+        // Attach filter event listeners
+        document.getElementById('stopsFilter')?.addEventListener('change', applyFilters);
+        document.getElementById('airlinesFilter')?.addEventListener('change', applyFilters);
+    </script>
+}
